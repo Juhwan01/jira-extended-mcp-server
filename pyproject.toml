@@ -1,0 +1,31 @@
+[project]
+name = "jira-extended-mcp"
+version = "0.1.0"
+description = "Extended Jira MCP Server - Full CRUD, bulk ops, sprints, releases, and more"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "Moobean Team" }]
+keywords = ["mcp", "jira", "atlassian", "claude", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "fastmcp>=2.0.0",
+    "httpx>=0.27.0",
+]
+
+[project.scripts]
+jira-extended-mcp = "jira_extended_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jira_extended_mcp"]
