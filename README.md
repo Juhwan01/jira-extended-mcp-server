@@ -19,6 +19,10 @@
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" /></a>
 </p>
 
+<p align="center">
+  <a href="README.ko.md">한국어</a> | English
+</p>
+
 ---
 
 > Built by **Moobean Team** — because existing Jira MCP integrations don't support `parent`, `fixVersions`, `startDate`, `dueDate`, issue links, or release management.
@@ -40,30 +44,30 @@
 
 ## Use Cases
 
-AI 에이전트에게 자연어로 요청하면 됩니다:
+Just ask your AI agent in natural language:
 
-**이슈 관리**
-> "KAN 프로젝트에 에픽 하나 만들어줘. 제목은 '사용자 인증 시스템', 시작일 4월 1일, 마감일 4월 30일"
+**Issue Management**
+> "Create an epic in the KAN project titled 'User Auth System', start date April 1st, due date April 30th"
 
-> "KAN-42 에픽 아래에 스토리 5개 만들어줘: 로그인, 회원가입, 비밀번호 재설정, 소셜 로그인, 2FA"
+> "Create 5 stories under KAN-42: Login, Sign Up, Password Reset, Social Login, 2FA"
 
-> "KAN 프로젝트에서 '진행 중' 상태인 이슈 다 보여줘"
+> "Show me all 'In Progress' issues in the KAN project"
 
-**벌크 작업**
-> "이 스프린트 백로그 10개 이슈를 한번에 '완료'로 전환해줘"
+**Bulk Operations**
+> "Transition all 10 backlog issues in this sprint to 'Done'"
 
-> "v2.0 릴리스에 포함된 이슈 목록 보여줘"
+> "Show me the issue list included in the v2.0 release"
 
-**릴리스 & 스프린트**
-> "KAN 프로젝트에 v2.1.0 릴리스를 만들어줘. 릴리스 날짜는 5월 15일"
+**Releases & Sprints**
+> "Create a v2.1.0 release in KAN project with release date May 15th"
 
-> "현재 활성 스프린트에 KAN-50, KAN-51 이슈를 옮겨줘"
+> "Move KAN-50 and KAN-51 to the current active sprint"
 
-**이슈 링크**
-> "KAN-10이 KAN-20을 블록하고 있다고 링크 걸어줘"
+**Issue Links**
+> "Link KAN-10 as blocking KAN-20"
 
-**리치 텍스트 (위키 마크업)**
-> "이슈 설명에 h2 제목이랑 불릿 리스트 넣어서 만들어줘"
+**Rich Text (Wiki Markup)**
+> "Create an issue with h2 headings and bullet lists in the description"
 
 ## Quick Start
 
@@ -330,7 +334,7 @@ src/jira_extended_mcp/
 
 | Decision | Why |
 |---|---|
-| **REST API v2** for issues/comments | v2 accepts wiki markup strings → rich text. v3 requires ADF JSON which strips formatting |
+| **REST API v2** for issues/comments | v2 accepts wiki markup strings for rich text. v3 requires ADF JSON which strips formatting |
 | **REST API v3** for metadata | Versions, projects, users don't have text fields — v3 is fine |
 | **Agile API** for sprints/boards | Sprint ops are only available via `/rest/agile/1.0/` |
 | **FastMCP lifespan** | `httpx.AsyncClient` pooled across tool calls, not per-request |
