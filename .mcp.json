@@ -1,12 +1,13 @@
 {
   "mcpServers": {
     "jira-extended": {
-      "command": "uvx",
+      "command": "uvx.exe",
       "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
-        "JIRA_API_TOKEN": "your-api-token"
+        "JIRA_API_TOKEN": "your-api-token",
+        "PYTHONUNBUFFERED": "1"
       }
     }
   }
