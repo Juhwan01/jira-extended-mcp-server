@@ -25,22 +25,36 @@
 
 ---
 
-> **Moobean Team** 제작 — 기존 Jira MCP 서버들이 `parent`, `fixVersions`, `startDate`, `dueDate`, 이슈 링크, 릴리스 관리를 지원하지 않아서 만들었습니다.
+> **Moobean Team** 제작 — 가볍고, Jira 전용, 최소 설정으로 바로 사용할 수 있는 MCP 서버입니다.
 
-## 왜 이 서버인가?
+## 이 서버의 차별점
 
-| | jira-mcp (npm) | AIRIS Gateway | **Jira Extended** |
-|---|---|---|---|
-| 이슈 CRUD | 읽기 전용 | 생성/수정 | **전체 CRUD + 벌크** |
-| 상위/하위 이슈 | - | - | **지원** |
-| fixVersions | - | - | **지원** |
-| 시작일 / 마감일 | - | - | **지원** |
-| 이슈 링크 | - | - | **지원** |
-| 릴리스 관리 | - | - | **4개 도구** |
-| 스프린트 관리 | - | 일부 | **2개 도구** |
-| 리치 텍스트 | - | 평문만 | **위키 마크업** |
-| 벌크 작업 | - | - | **50개/호출** |
-| 총 도구 수 | 2 | 18 | **27** |
+- **Jira 전용, 군더더기 없음** — Confluence 없이, 추가 모듈 없이. `uvx` 한 줄이면 바로 실행.
+- **위키 마크업 지원** — Jira REST API v2를 사용해서 `*bold*`, `h2. Title`, `* bullet` 그대로 동작. ADF JSON 변환 불필요.
+- **벌크 작업** — 이슈 최대 50개 한 번에 생성하거나 여러 이슈 상태를 일괄 전환.
+- **릴리스 전체 관리** — 버전 생성, 수정, 삭제, 이슈 릴리스 배정까지.
+- **이슈 링크** — 차단, 관련, 중복, 복제 — 생성, 조회, 삭제 모두 지원.
+
+## 비교
+
+> **참고:** 아래 기능 정보는 2026년 3월 기준 각 프로젝트의 README와 문서를 참고한 것입니다. 이후 변경되었을 수 있습니다.
+
+| | [jira-mcp](https://github.com/CamdenClark/jira-mcp) | [mcp-atlassian](https://github.com/sooperset/mcp-atlassian) | [Atlassian Rovo MCP](https://github.com/atlassian/atlassian-mcp-server) | **Jira Extended** |
+|---|---|---|---|---|
+| 범위 | Jira 전용 | Jira + Confluence | Jira + Confluence + Compass | Jira 전용 |
+| 이슈 CRUD | 읽기 전용 | 전체 CRUD | 전체 CRUD | 전체 CRUD |
+| 벌크 생성 | - | 지원 | 지원 | **50개/호출** |
+| 벌크 전환 | - | - | - | **지원** |
+| 상위/하위 이슈 | - | 지원 | 지원 | 지원 |
+| fixVersions | - | 지원 | 지원 | 지원 |
+| 시작일 / 마감일 | - | 지원 | 지원 | 지원 |
+| 이슈 링크 | - | 지원 | - | 지원 |
+| 릴리스 관리 | - | - | - | **4개 도구** |
+| 스프린트 관리 | - | 지원 | - | 지원 |
+| 리치 텍스트 | - | Markdown → ADF | ADF | **위키 마크업 (v2 API)** |
+| 설치 방식 | npm | pip / Docker | OAuth (클라우드 호스팅) | **`uvx` 한 줄** |
+| Jira 도구 수 | 2 | ~30 (Jira 부분) | ~25 (Jira 부분) | 27 |
+| 언어 | TypeScript | Python | 리모트 (SaaS) | Python |
 
 ## 사용 예시
 

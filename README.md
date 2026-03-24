@@ -25,22 +25,36 @@
 
 ---
 
-> Built by **Moobean Team** — because existing Jira MCP integrations don't support `parent`, `fixVersions`, `startDate`, `dueDate`, issue links, or release management.
+> Built by **Moobean Team** — a lightweight, Jira-only MCP server focused on getting things done with minimal setup.
 
-## Why This Server?
+## What Makes This Different
 
-| | jira-mcp (npm) | AIRIS Gateway | **Jira Extended** |
-|---|---|---|---|
-| Issue CRUD | Read-only | Create/Update | **Full CRUD + Bulk** |
-| Parent / Sub-task | - | - | **Supported** |
-| fixVersions | - | - | **Supported** |
-| startDate / dueDate | - | - | **Supported** |
-| Issue Links | - | - | **Supported** |
-| Release Management | - | - | **4 tools** |
-| Sprint Management | - | Partial | **2 tools** |
-| Rich Text | - | Plain text only | **Wiki markup** |
-| Bulk Operations | - | - | **50 issues/call** |
-| Total Tools | 2 | 18 | **27** |
+- **Jira-only, zero bloat** — No Confluence, no extra modules. One `uvx` command and you're running.
+- **Wiki markup support** — Uses Jira REST API v2, so `*bold*`, `h2. Title`, `* bullet` just work. No ADF JSON hassle.
+- **Bulk operations** — Create up to 50 issues or transition multiple issues in a single call.
+- **Full release lifecycle** — Create, update, delete versions and assign issues to releases.
+- **Issue links** — Block, relate, duplicate, clone — with create, query, and delete support.
+
+## Comparison
+
+> **Note:** Feature data is based on each project's README and documentation as of March 2026. Features may have changed since then.
+
+| | [jira-mcp](https://github.com/CamdenClark/jira-mcp) | [mcp-atlassian](https://github.com/sooperset/mcp-atlassian) | [Atlassian Rovo MCP](https://github.com/atlassian/atlassian-mcp-server) | **Jira Extended** |
+|---|---|---|---|---|
+| Scope | Jira only | Jira + Confluence | Jira + Confluence + Compass | Jira only |
+| Issue CRUD | Read-only | Full CRUD | Full CRUD | Full CRUD |
+| Bulk Create | - | Supported | Supported | **50 issues/call** |
+| Bulk Transition | - | - | - | **Supported** |
+| Parent / Sub-task | - | Supported | Supported | Supported |
+| fixVersions | - | Supported | Supported | Supported |
+| startDate / dueDate | - | Supported | Supported | Supported |
+| Issue Links | - | Supported | - | Supported |
+| Release Management | - | - | - | **4 tools** |
+| Sprint Management | - | Supported | - | Supported |
+| Rich Text | - | Markdown → ADF | ADF | **Wiki markup (v2 API)** |
+| Setup | npm | pip / Docker | OAuth (cloud-hosted) | **`uvx` one-liner** |
+| Total Jira Tools | 2 | ~30 (Jira portion) | ~25 (Jira portion) | 27 |
+| Language | TypeScript | Python | Remote (SaaS) | Python |
 
 ## Use Cases
 
