@@ -108,11 +108,19 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 **가장 간단 — 명령어 한 줄:**
 ```bash
+# macOS / Linux
 claude mcp add jira-extended -s user \
   -e JIRA_URL=https://your-instance.atlassian.net \
   -e JIRA_EMAIL=your-email@example.com \
   -e JIRA_API_TOKEN=your-token \
   -- uvx jira-extended-mcp
+
+# Windows — uvx.exe 사용 (uvx.cmd 래퍼의 stdio 문제 방지)
+claude mcp add jira-extended -s user \
+  -e JIRA_URL=https://your-instance.atlassian.net \
+  -e JIRA_EMAIL=your-email@example.com \
+  -e JIRA_API_TOKEN=your-token \
+  -- uvx.exe jira-extended-mcp
 ```
 
 > `-s user`는 글로벌 설치입니다. 생략하면 현재 프로젝트에만 설치됩니다.
@@ -144,6 +152,8 @@ notepad %USERPROFILE%\.claude.json
   }
 }
 ```
+
+> **Windows 사용자:** `"command": "uvx"` 대신 `"command": "uvx.exe"`를 사용하세요. Windows의 `uvx.cmd` 래퍼가 MCP stdio 통신을 방해합니다.
 
 </details>
 
@@ -177,6 +187,8 @@ notepad %APPDATA%\Claude\claude_desktop_config.json
 ```
 
 > 이미 다른 MCP 서버가 설정되어 있다면, 기존 `"mcpServers"` 객체 안에 `"jira-extended": {...}` 블록만 추가하세요.
+>
+> **Windows 사용자:** `"command": "uvx"` 대신 `"command": "uvx.exe"`를 사용하세요.
 
 </details>
 
@@ -206,6 +218,8 @@ code .vscode/mcp.json
 ```
 
 > MCP 활성화: **Settings > Chat > MCP** 체크 필요. Agent 모드에서 동작합니다.
+>
+> **Windows 사용자:** `"command": "uvx"` 대신 `"command": "uvx.exe"`를 사용하세요.
 
 </details>
 
@@ -236,6 +250,8 @@ notepad %USERPROFILE%\.cursor\mcp.json
   }
 }
 ```
+
+> **Windows 사용자:** `"command": "uvx"` 대신 `"command": "uvx.exe"`를 사용하세요.
 
 </details>
 

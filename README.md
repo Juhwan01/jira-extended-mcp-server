@@ -108,11 +108,19 @@ Choose where to add the config:
 
 **Easiest — one command:**
 ```bash
+# macOS / Linux
 claude mcp add jira-extended -s user \
   -e JIRA_URL=https://your-instance.atlassian.net \
   -e JIRA_EMAIL=your-email@example.com \
   -e JIRA_API_TOKEN=your-token \
   -- uvx jira-extended-mcp
+
+# Windows — use uvx.exe (not uvx) to avoid .cmd wrapper issues
+claude mcp add jira-extended -s user \
+  -e JIRA_URL=https://your-instance.atlassian.net \
+  -e JIRA_EMAIL=your-email@example.com \
+  -e JIRA_API_TOKEN=your-token \
+  -- uvx.exe jira-extended-mcp
 ```
 
 > `-s user` installs globally. Omit it for project-only install.
@@ -144,6 +152,8 @@ Add this content (create the file if it doesn't exist):
   }
 }
 ```
+
+> **Windows users:** Use `"command": "uvx.exe"` instead of `"command": "uvx"`. The `uvx.cmd` wrapper on Windows breaks the MCP stdio transport.
 
 </details>
 
@@ -177,6 +187,8 @@ Add or merge into the file:
 ```
 
 > If the file already has other MCP servers, add the `"jira-extended": {...}` block inside the existing `"mcpServers"` object.
+>
+> **Windows users:** Use `"command": "uvx.exe"` instead of `"command": "uvx"`.
 
 </details>
 
@@ -206,6 +218,8 @@ code .vscode/mcp.json
 ```
 
 > Enable MCP: **Settings > Chat > MCP** must be checked. Works in Agent mode.
+>
+> **Windows users:** Use `"command": "uvx.exe"` instead of `"command": "uvx"`.
 
 </details>
 
@@ -236,6 +250,8 @@ notepad %USERPROFILE%\.cursor\mcp.json
   }
 }
 ```
+
+> **Windows users:** Use `"command": "uvx.exe"` instead of `"command": "uvx"`.
 
 </details>
 
