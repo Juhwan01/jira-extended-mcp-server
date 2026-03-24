@@ -1,6 +1,6 @@
 [project]
 name = "jira-extended-mcp"
-version = "0.2.0"
+version = "0.3.2"
 description = "Extended Jira MCP Server - Full CRUD, bulk ops, sprints, releases, and more"
 readme = "README.md"
 license = { text = "MIT" }

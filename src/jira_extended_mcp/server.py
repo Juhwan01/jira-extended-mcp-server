@@ -384,7 +384,7 @@ async def search_issues(
     jql: str,
     fields: str = "summary,status,assignee,priority,issuetype,parent,fixVersions,labels",
     max_results: int = 50,
-    start_at: int = 0,
+    next_page_token: str | None = None,
     ctx: Context | None = None,
 ) -> dict[str, Any]:
     """Search Jira issues using JQL.
@@ -393,26 +393,30 @@ async def search_issues(
         jql: JQL query string (e.g., 'project = KAN AND status = "To Do"')
         fields: Comma-separated fields to return
         max_results: Maximum results (1-100, default 50)
-        start_at: Pagination offset
+        next_page_token: Token for next page (from previous response)
     """
     jira = _jira(ctx)
-    payload = {
+    payload: dict[str, Any] = {
         "jql": jql,
         "fields": [f.strip() for f in fields.split(",")],
         "maxResults": min(max_results, 100),
-        "startAt": start_at,
     }
-    result = await jira.post("/rest/api/2/search", json=payload)
+    if next_page_token:
+        payload["nextPageToken"] = next_page_token
+
+    result = await jira.post("/rest/api/3/search/jql", json=payload)
 
     if isinstance(result, dict) and "issues" in result:
-        formatted = {
-            "total": result.get("total", 0),
-            "start_at": result.get("startAt", 0),
+        formatted: dict[str, Any] = {
             "max_results": result.get("maxResults", 50),
             "issues": [
                 _format_issue(issue, jira) for issue in result["issues"]
             ],
         }
+        if result.get("total") is not None:
+            formatted["total"] = result["total"]
+        if result.get("nextPageToken"):
+            formatted["next_page_token"] = result["nextPageToken"]
         return formatted
     return result
 
@@ -675,17 +679,9 @@ async def create_version(
     """
     jira = _jira(ctx)
 
-    project = await jira.get(f"/rest/api/3/project/{project_key}")
-    if isinstance(project, dict) and project.get("error"):
-        return project
-
-    project_id = project.get("id") if isinstance(project, dict) else None
-    if not project_id:
-        return {"error": f"Could not find project {project_key}"}
-
     payload: dict[str, Any] = {
         "name": name,
-        "projectId": int(project_id),
+        "project": project_key,
         "archived": False,
         "released": False,
     }
