@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/jira-extended-mcp/"><img alt="PyPI" src="https://img.shields.io/pypi/v/jira-extended-mcp?style=flat-square" /></a>
   <a href="https://modelcontextprotocol.io"><img alt="MCP" src="https://img.shields.io/badge/MCP-v1.0-blue?style=flat-square" /></a>
   <a href="https://www.python.org/downloads/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" /></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" /></a>
-  <a href="https://github.com/astral-sh/uv"><img alt="uv" src="https://img.shields.io/badge/uv-recommended-DE5FE9?style=flat-square" /></a>
 </p>
 
 ---
@@ -69,36 +69,28 @@ AI 에이전트에게 자연어로 요청하면 됩니다:
 
 ### Prerequisites
 
-- Python 3.11+
-- [`uv`](https://docs.astral.sh/uv/) (recommended) or `pip`
+- [`uv`](https://docs.astral.sh/uv/) (Python package manager — installs Python automatically if needed)
 - [Jira API Token](https://id.atlassian.com/manage-profile/security/api-tokens)
 
-### 1. Clone
+### Install
 
-```bash
-git clone https://github.com/moobean-team/jira-extended-mcp-server.git
-cd jira-extended-mcp-server
-```
+No clone needed. Just configure your AI client:
 
-### 2. Configure your AI client
-
-<details>
+<details open>
 <summary><b>Claude Code</b></summary>
 
-Add to your project `.mcp.json` or `~/.claude.json`:
+**One-line install:**
+```bash
+claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e JIRA_EMAIL=your-email@example.com -e JIRA_API_TOKEN=your-token -- uvx jira-extended-mcp
+```
 
+**Or add to** `.mcp.json` / `~/.claude.json`:
 ```json
 {
   "mcpServers": {
     "jira-extended": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with", "fastmcp",
-        "--with", "httpx",
-        "--directory", "/path/to/jira-extended-mcp-server",
-        "python", "-m", "jira_extended_mcp.server"
-      ],
+      "command": "uvx",
+      "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
@@ -107,11 +99,6 @@ Add to your project `.mcp.json` or `~/.claude.json`:
     }
   }
 }
-```
-
-Or via CLI:
-```bash
-claude mcp add jira-extended -- uv run --with fastmcp --with httpx --directory /path/to/jira-extended-mcp-server python -m jira_extended_mcp.server
 ```
 
 </details>
@@ -128,14 +115,8 @@ Add to `claude_desktop_config.json`:
 {
   "mcpServers": {
     "jira-extended": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with", "fastmcp",
-        "--with", "httpx",
-        "--directory", "/path/to/jira-extended-mcp-server",
-        "python", "-m", "jira_extended_mcp.server"
-      ],
+      "command": "uvx",
+      "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
@@ -157,14 +138,8 @@ Add to `.vscode/mcp.json` in your project:
 {
   "servers": {
     "jira-extended": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with", "fastmcp",
-        "--with", "httpx",
-        "--directory", "/path/to/jira-extended-mcp-server",
-        "python", "-m", "jira_extended_mcp.server"
-      ],
+      "command": "uvx",
+      "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
@@ -188,14 +163,8 @@ Add to `~/.cursor/mcp.json`:
 {
   "mcpServers": {
     "jira-extended": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with", "fastmcp",
-        "--with", "httpx",
-        "--directory", "/path/to/jira-extended-mcp-server",
-        "python", "-m", "jira_extended_mcp.server"
-      ],
+      "command": "uvx",
+      "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
@@ -208,9 +177,22 @@ Add to `~/.cursor/mcp.json`:
 
 </details>
 
-### 3. Done
+<details>
+<summary><b>From source (development)</b></summary>
 
-Restart your AI client. The server starts automatically as a subprocess.
+```bash
+git clone https://github.com/moobean-team/jira-extended-mcp-server.git
+cd jira-extended-mcp-server
+uv pip install -e .
+```
+
+Then use `"command": "jira-extended-mcp"` instead of `"command": "uvx"` in your config.
+
+</details>
+
+### Done
+
+Restart your AI client. The server starts automatically — no clone, no pip install, no venv needed.
 
 ## Configuration
 
@@ -358,14 +340,15 @@ src/jira_extended_mcp/
 ## Development
 
 ```bash
-# Install in development mode
+git clone https://github.com/moobean-team/jira-extended-mcp-server.git
+cd jira-extended-mcp-server
 uv pip install -e .
 
 # Run directly
-uv run python -m jira_extended_mcp.server
+jira-extended-mcp
 
-# Or via the entry point
-uv run jira-extended-mcp
+# Or via module
+python -m jira_extended_mcp.server
 ```
 
 ## Troubleshooting

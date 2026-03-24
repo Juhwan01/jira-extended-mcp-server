@@ -1,14 +1,8 @@
 {
   "mcpServers": {
     "jira-extended": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with", "fastmcp",
-        "--with", "httpx",
-        "--directory", ".",
-        "python", "-m", "jira_extended_mcp.server"
-      ],
+      "command": "uvx",
+      "args": ["jira-extended-mcp"],
       "env": {
         "JIRA_URL": "https://your-instance.atlassian.net",
         "JIRA_EMAIL": "your-email@example.com",
