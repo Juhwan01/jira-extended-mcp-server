@@ -76,19 +76,59 @@ Just ask your AI agent in natural language:
 - [`uv`](https://docs.astral.sh/uv/) (Python package manager — installs Python automatically if needed)
 - [Jira API Token](https://id.atlassian.com/manage-profile/security/api-tokens)
 
-### Install
+### Step 1: Install uv
 
-No clone needed. Just configure your AI client:
+`uv` is a Python package manager. If you don't have it:
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+### Step 2: Get a Jira API Token
+
+1. Go to https://id.atlassian.com/manage-profile/security/api-tokens
+2. Click **Create API token**
+3. Copy the token — you'll need it in the next step
+
+### Step 3: Configure your AI client
+
+Choose where to add the config:
+
+| Scope | File | Effect |
+|---|---|---|
+| **Global** (recommended) | `~/.claude.json` | Available in all projects |
+| **Project only** | `.mcp.json` in project root | Only in that project |
 
 <details open>
 <summary><b>Claude Code</b></summary>
 
-**One-line install:**
+**Easiest — one command:**
 ```bash
-claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e JIRA_EMAIL=your-email@example.com -e JIRA_API_TOKEN=your-token -- uvx jira-extended-mcp
+claude mcp add jira-extended -s user \
+  -e JIRA_URL=https://your-instance.atlassian.net \
+  -e JIRA_EMAIL=your-email@example.com \
+  -e JIRA_API_TOKEN=your-token \
+  -- uvx jira-extended-mcp
 ```
 
-**Or add to** `.mcp.json` / `~/.claude.json`:
+> `-s user` installs globally. Omit it for project-only install.
+
+**Or edit the config file manually:**
+
+Open the file in a text editor:
+```bash
+# macOS / Linux
+code ~/.claude.json    # or: nano ~/.claude.json
+
+# Windows
+notepad %USERPROFILE%\.claude.json
+```
+
+Add this content (create the file if it doesn't exist):
 ```json
 {
   "mcpServers": {
@@ -110,11 +150,16 @@ claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e 
 <details>
 <summary><b>Claude Desktop</b></summary>
 
-Add to `claude_desktop_config.json`:
+Open the config file in a text editor:
+```bash
+# macOS
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+# Windows
+notepad %APPDATA%\Claude\claude_desktop_config.json
+```
 
+Add or merge into the file:
 ```json
 {
   "mcpServers": {
@@ -131,12 +176,18 @@ Add to `claude_desktop_config.json`:
 }
 ```
 
+> If the file already has other MCP servers, add the `"jira-extended": {...}` block inside the existing `"mcpServers"` object.
+
 </details>
 
 <details>
 <summary><b>VS Code (GitHub Copilot)</b></summary>
 
-Add to `.vscode/mcp.json` in your project:
+Create `.vscode/mcp.json` in your project root:
+```bash
+mkdir -p .vscode
+code .vscode/mcp.json
+```
 
 ```json
 {
@@ -154,14 +205,21 @@ Add to `.vscode/mcp.json` in your project:
 }
 ```
 
-Make sure MCP is enabled under **Chat > MCP** in VS Code settings. Works in Agent mode.
+> Enable MCP: **Settings > Chat > MCP** must be checked. Works in Agent mode.
 
 </details>
 
 <details>
 <summary><b>Cursor</b></summary>
 
-Add to `~/.cursor/mcp.json`:
+Open the config file:
+```bash
+# macOS / Linux
+code ~/.cursor/mcp.json
+
+# Windows
+notepad %USERPROFILE%\.cursor\mcp.json
+```
 
 ```json
 {
@@ -194,9 +252,13 @@ Then use `"command": "jira-extended-mcp"` instead of `"command": "uvx"` in your 
 
 </details>
 
-### Done
+### Step 4: Restart & verify
 
-Restart your AI client. The server starts automatically — no clone, no pip install, no venv needed.
+Restart your AI client, then ask:
+
+> "Show my Jira projects"
+
+If you see your project list, you're all set.
 
 ## Configuration
 

@@ -76,19 +76,59 @@ AI 에이전트에게 자연어로 요청하면 됩니다:
 - [`uv`](https://docs.astral.sh/uv/) (Python 패키지 매니저 — Python 자동 설치)
 - [Jira API 토큰](https://id.atlassian.com/manage-profile/security/api-tokens)
 
-### 설치
+### 1단계: uv 설치
 
-clone 필요 없습니다. AI 클라이언트에 설정만 추가하세요:
+`uv`는 Python 패키지 매니저입니다. 없으면 설치:
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+### 2단계: Jira API 토큰 발급
+
+1. https://id.atlassian.com/manage-profile/security/api-tokens 접속
+2. **Create API token** 클릭
+3. 토큰 복사 — 다음 단계에서 사용
+
+### 3단계: AI 클라이언트에 설정 추가
+
+설정 파일 위치에 따라 범위가 달라집니다:
+
+| 범위 | 파일 | 효과 |
+|---|---|---|
+| **글로벌** (권장) | `~/.claude.json` | 모든 프로젝트에서 사용 가능 |
+| **프로젝트 전용** | 프로젝트 루트의 `.mcp.json` | 해당 프로젝트에서만 사용 |
 
 <details open>
 <summary><b>Claude Code</b></summary>
 
-**원라인 설치:**
+**가장 간단 — 명령어 한 줄:**
 ```bash
-claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e JIRA_EMAIL=your-email@example.com -e JIRA_API_TOKEN=your-token -- uvx jira-extended-mcp
+claude mcp add jira-extended -s user \
+  -e JIRA_URL=https://your-instance.atlassian.net \
+  -e JIRA_EMAIL=your-email@example.com \
+  -e JIRA_API_TOKEN=your-token \
+  -- uvx jira-extended-mcp
 ```
 
-**또는** `.mcp.json` / `~/.claude.json`에 추가:
+> `-s user`는 글로벌 설치입니다. 생략하면 현재 프로젝트에만 설치됩니다.
+
+**또는 설정 파일을 직접 편집:**
+
+텍스트 에디터로 파일 열기:
+```bash
+# macOS / Linux
+code ~/.claude.json    # 또는: nano ~/.claude.json
+
+# Windows
+notepad %USERPROFILE%\.claude.json
+```
+
+아래 내용 추가 (파일이 없으면 새로 생성):
 ```json
 {
   "mcpServers": {
@@ -110,11 +150,16 @@ claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e 
 <details>
 <summary><b>Claude Desktop</b></summary>
 
-`claude_desktop_config.json`에 추가:
+설정 파일을 텍스트 에디터로 열기:
+```bash
+# macOS
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+# Windows
+notepad %APPDATA%\Claude\claude_desktop_config.json
+```
 
+아래 내용을 추가 또는 병합:
 ```json
 {
   "mcpServers": {
@@ -131,12 +176,18 @@ claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e 
 }
 ```
 
+> 이미 다른 MCP 서버가 설정되어 있다면, 기존 `"mcpServers"` 객체 안에 `"jira-extended": {...}` 블록만 추가하세요.
+
 </details>
 
 <details>
 <summary><b>VS Code (GitHub Copilot)</b></summary>
 
-프로젝트의 `.vscode/mcp.json`에 추가:
+프로젝트 루트에 `.vscode/mcp.json` 생성:
+```bash
+mkdir -p .vscode
+code .vscode/mcp.json
+```
 
 ```json
 {
@@ -154,14 +205,21 @@ claude mcp add jira-extended -e JIRA_URL=https://your-instance.atlassian.net -e 
 }
 ```
 
-VS Code 설정에서 **Chat > MCP**가 활성화되어 있어야 합니다. Agent 모드에서 동작합니다.
+> MCP 활성화: **Settings > Chat > MCP** 체크 필요. Agent 모드에서 동작합니다.
 
 </details>
 
 <details>
 <summary><b>Cursor</b></summary>
 
-`~/.cursor/mcp.json`에 추가:
+설정 파일 열기:
+```bash
+# macOS / Linux
+code ~/.cursor/mcp.json
+
+# Windows
+notepad %USERPROFILE%\.cursor\mcp.json
+```
 
 ```json
 {
@@ -194,9 +252,13 @@ uv pip install -e .
 
 </details>
 
-### 완료
+### 4단계: 재시작 & 확인
 
-AI 클라이언트를 재시작하세요. 서버가 자동으로 시작됩니다 — clone, pip install, venv 모두 불필요합니다.
+AI 클라이언트를 재시작한 후:
+
+> "내 Jira 프로젝트 목록 보여줘"
+
+프로젝트 목록이 보이면 설치 완료입니다.
 
 ## 설정
 
