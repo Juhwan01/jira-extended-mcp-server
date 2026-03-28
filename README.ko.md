@@ -414,6 +414,36 @@ curl -s -u email:token https://your-instance.atlassian.net/rest/api/2/field \
 
 ## 아키텍처
 
+```mermaid
+graph TB
+    subgraph Clients["AI 클라이언트"]
+        claude["Claude Code"]
+        cursor["Cursor"]
+        vscode["VS Code"]
+        desktop["Claude Desktop"]
+    end
+
+    subgraph Server["Jira Extended MCP Server"]
+        tools["27개 MCP 도구"]
+        client["비동기 httpx 클라이언트\n(Rate Limit 재시도)"]
+    end
+
+    subgraph JiraAPI["Jira Cloud"]
+        v2["REST API v2\n(이슈 / 댓글)"]
+        v3["REST API v3\n(검색 / 메타데이터)"]
+        agile["Agile API\n(스프린트 / 보드)"]
+    end
+
+    claude -- stdio --> tools
+    cursor -- stdio --> tools
+    vscode -- stdio --> tools
+    desktop -- stdio --> tools
+    tools --> client
+    client -- "Wiki Markup" --> v2
+    client -- "JQL + Cursor" --> v3
+    client --> agile
+```
+
 ```
 src/jira_extended_mcp/
 ├── server.py    # FastMCP 서버 + 27개 도구 정의
