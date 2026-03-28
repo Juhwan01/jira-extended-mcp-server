@@ -414,6 +414,10 @@ Full reference: [Jira Wiki Markup](https://jira.atlassian.com/secure/WikiRendere
 
 ## Architecture
 
+<p align="center">
+  <img src="docs/architecture.png" alt="Architecture" width="700" />
+</p>
+
 ```
 src/jira_extended_mcp/
 ├── server.py    # FastMCP server + 27 tool definitions

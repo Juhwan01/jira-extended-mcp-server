@@ -414,6 +414,10 @@ curl -s -u email:token https://your-instance.atlassian.net/rest/api/2/field \
 
 ## 아키텍처
 
+<p align="center">
+  <img src="docs/architecture.png" alt="Architecture" width="700" />
+</p>
+
 ```
 src/jira_extended_mcp/
 ├── server.py    # FastMCP 서버 + 27개 도구 정의
