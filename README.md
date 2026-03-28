@@ -414,36 +414,6 @@ Full reference: [Jira Wiki Markup](https://jira.atlassian.com/secure/WikiRendere
 
 ## Architecture
 
-```mermaid
-graph TB
-    subgraph Clients["AI Clients"]
-        claude["Claude Code"]
-        cursor["Cursor"]
-        vscode["VS Code"]
-        desktop["Claude Desktop"]
-    end
-
-    subgraph Server["Jira Extended MCP Server"]
-        tools["27 MCP Tools"]
-        client["Async httpx Client\n(Rate Limit Retry)"]
-    end
-
-    subgraph JiraAPI["Jira Cloud"]
-        v2["REST API v2\n(Issues / Comments)"]
-        v3["REST API v3\n(Search / Metadata)"]
-        agile["Agile API\n(Sprints / Boards)"]
-    end
-
-    claude -- stdio --> tools
-    cursor -- stdio --> tools
-    vscode -- stdio --> tools
-    desktop -- stdio --> tools
-    tools --> client
-    client -- "Wiki Markup" --> v2
-    client -- "JQL + Cursor" --> v3
-    client --> agile
-```
-
 ```
 src/jira_extended_mcp/
 ├── server.py    # FastMCP server + 27 tool definitions
